@@ -13,6 +13,7 @@ endif()
 
 option(BUILD_SHARED_LIBS "Build mlx C as a shared library" OFF)
 option(MLX_C_BUILD_EXAMPLES "Build examples for mlx C" ON)
+option(MLX_C_BUILD_TESTS "Build tests for mlx C" OFF)
 option(MLX_C_USE_SYSTEM_MLX "Use system MLX" OFF)
 
 # ----------------------------- mlx -----------------------------
@@ -84,6 +85,13 @@ endif()
 
 if(MLX_C_BUILD_EXAMPLES)
   add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/examples)
+endif()
+
+if(MLX_C_BUILD_TESTS)
+  enable_testing()
+  add_executable(mlx_c_io_errors tests/io_errors.cpp)
+  target_link_libraries(mlx_c_io_errors PRIVATE mlxc mlx)
+  add_test(NAME mlx_c_io_errors COMMAND mlx_c_io_errors)
 endif()
 
 # ----------------------------- Installation -----------------------------
